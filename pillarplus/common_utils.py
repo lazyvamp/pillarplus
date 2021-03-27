@@ -10,7 +10,7 @@ def is_point_inside(opst_corner1, opst_corner2, point):
 def line_passing_through_two_point(co1,co2):
     a = co2[1]-co1[1]
     b = co1[0]-co2[0]
-    c = a*(co1[0]) + b*(co1[1])
+    c = -(a*(co1[0]) + b*(co1[1]))
     return {
         "x_coef": a,
         "y_coef": b,

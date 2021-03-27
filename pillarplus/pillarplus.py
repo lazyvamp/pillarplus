@@ -42,7 +42,6 @@ def circle_perfectly_lie_inside_rectangle(rectangle_cords, circles_loc):
         else:
             l = line_passing_through_two_point(rectangle_cords[i], rectangle_cords[i-3])
         line_data.append(l)
-
     distance_from_lines = []
     circles_loc_keys = []
     for n in circles_loc.keys():
@@ -53,12 +52,14 @@ def circle_perfectly_lie_inside_rectangle(rectangle_cords, circles_loc):
             distences.append(d)
         distance_from_lines.append(distences)
     answer = {}
- 
     opp_cor = opposit_corner_of_rectangle(rectangle_cords)
     for i in range(0,4):
-        if circles_loc[circles_loc_keys[i]] < distance_from_lines[i][0] and distance_from_lines[i][1] and distance_from_lines[i][2] and distance_from_lines[i][3]:
-            if is_point_inside(opp_cor[0], opp_cor[1], circles_loc_keys[i]) is True: 
-                answer[circles_loc_keys[i]] = circles_loc[circles_loc_keys[i]]
+        if is_point_inside(opp_cor[0], opp_cor[1], circles_loc_keys[i]) is True:
+            if circles_loc[circles_loc_keys[i]] < distance_from_lines[i][0]:
+                if circles_loc[circles_loc_keys[i]] < distance_from_lines[i][1]:
+                    if circles_loc[circles_loc_keys[i]] < distance_from_lines[i][2]:
+                        if circles_loc[circles_loc_keys[i]] < distance_from_lines[i][3]:
+                            answer[circles_loc_keys[i]] = circles_loc[circles_loc_keys[i]]
 
     print("perfectly inside circles are:-" , answer)
 circle_perfectly_lie_inside_rectangle(rectangle_cords, circles_loc)
