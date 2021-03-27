@@ -1,5 +1,7 @@
 import math
 from common_utils import *
+from itertools import combinations
+
 #question1
 
 list_co = [
@@ -88,3 +90,44 @@ for c in d:
 
 d=[k for k,v in circles_loc.items() if v == 2]
 print("circles with rdious 2 are:", count, "and having center at", d)
+
+
+#Question4
+#coordinate_after_rotation(origin=(0,0), point=(1,2), angle=180)
+points = [(0,5),(0,0),(0,10),(5,10),(10,10),(0,7),(10,0),(10,3)]
+
+def corners_of_rectangle(points):
+    cord_map = {}
+    for point in points:
+        if point[0] not in cord_map.keys():
+            cord_map[point[0]] = [point[1]]
+        else:
+            cord_map[point[0]].append(point[1])
+    min_x = min(cord_map.keys())
+    max_x = max(cord_map.keys())
+    
+    corner_1 = (min_x, min(cord_map[min_x]))
+    corner_3 = (max_x, max(cord_map[max_x]))
+    list_corner = [corner_3, corner_1]
+    
+    for point in points:
+        angle = get_angle(corner_1, point, corner_3)
+        if angle%90 == 0:
+            if point not in list_corner:
+                list_corner.append(point)
+    centrd = centroid(list_corner)
+    return list_corner, centrd
+
+# l2 = [(0,0), (0.5,0.5), (1,1), (1.5, 0.5), (2,0), (1.5,-0.5), (1,-1), (0.5,-0.5)]
+# test_lst = [(0,1), (1,0), (2,3), (3,2), (1,2), (2,1), (0.5,0.5), (2.5,2.5)]
+corner_list, centroid_of_rect = corners_of_rectangle(points)
+print("after rotation of 45-----------------")
+def rotated_coordinates(points, angle):
+    corner_list, center = corners_of_rectangle(points)
+    new_coordinates = []
+    for i in range(0,4):
+        cord = coordinate_after_rotation(center, corner_list[i], angle)
+        new_coordinates.append(cord)
+    return print(new_coordinates)
+rotated_coordinates(points, 45)
+
