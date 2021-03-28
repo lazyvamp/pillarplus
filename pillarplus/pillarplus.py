@@ -31,6 +31,51 @@ def edge_finder(list_co):
 
 edge_finder(list_co)
 
+print("=======================")
+
+#question2
+
+matrix = [
+    [1,1,0,0],
+    [0,1,1,0],
+    [0,0,0,0],
+    [1,0,0,0]
+]
+
+mat2 = [
+    [1,2,3,4],
+    [5,6,7,8],
+    [9,10,11,12],
+    [13,14,15,16]
+]
+
+
+def component_finder(mat):
+    position_list = []
+    final_list = []
+    for x in range(0,4):
+        for y in range(0,4):
+            if mat[x][y]==1:
+                if mat[x][y] not in position_list:
+                    position_list.append((x,y))
+    #list of coordinate having 1 val at it
+    for point in position_list:
+        for x in range(-1,2):
+            for y in range(-1,2):
+                if 0<=(point[0]-x):
+                    if 0<=(point[1]-y):
+                        if point != ((point[0]-x),(point[1]-y)):
+                            try:
+                                val = mat[(point[0]-x)][(point[1]-y)]
+                                if val == 1:
+                                    final_list.append((point, ((point[0]-x),(point[1]-y))))
+                            except:
+                                pass
+    #list of pairs of coordinate / component
+    print("components are:",final_list)
+component_finder(matrix)
+
+print("=======================")
 #question3
 
 rectangle_cords = [(0,0),(10,0),(10,10),(0,10)]
@@ -66,31 +111,7 @@ def circle_perfectly_lie_inside_rectangle(rectangle_cords, circles_loc):
     print("perfectly inside circles are:-" , answer)
 circle_perfectly_lie_inside_rectangle(rectangle_cords, circles_loc)
 
-
-#queston5
-circles_loc = {(5,5):1,(11,9):2,(12,12):1,(9,9):2} 
-
-rds = []
-keys = []
-for c, r in circles_loc.items():
-    rds.append(r)
-    keys.append(c)
-
-def circle_find(rad):
-    if rad == 2:
-        return True
-    else:
-        return False
-
-d = filter(circle_find, rds)
-
-count = 0
-for c in d:
-    count+=1
-
-d=[k for k,v in circles_loc.items() if v == 2]
-print("circles with rdious 2 are:", count, "and having center at", d)
-
+print("=======================")
 
 #Question4
 #coordinate_after_rotation(origin=(0,0), point=(1,2), angle=180)
@@ -121,13 +142,28 @@ def corners_of_rectangle(points):
 # l2 = [(0,0), (0.5,0.5), (1,1), (1.5, 0.5), (2,0), (1.5,-0.5), (1,-1), (0.5,-0.5)]
 # test_lst = [(0,1), (1,0), (2,3), (3,2), (1,2), (2,1), (0.5,0.5), (2.5,2.5)]
 corner_list, centroid_of_rect = corners_of_rectangle(points)
-print("after rotation of 45-----------------")
+
 def rotated_coordinates(points, angle):
     corner_list, center = corners_of_rectangle(points)
+    print("original coordinates of rectangle are:", corner_list)
     new_coordinates = []
     for i in range(0,4):
         cord = coordinate_after_rotation(center, corner_list[i], angle)
         new_coordinates.append(cord)
-    return print(new_coordinates)
+    return print("after rotation of {} new coordinates are: ".format(angle), new_coordinates)
 rotated_coordinates(points, 45)
 
+print("=======================")
+
+#queston5
+circles_loc = {(5,5):1,(11,9):2,(12,12):1,(9,9):2}
+
+def circle_find(center):
+    if circles_loc[center] == 2:
+        return True
+    else:
+        return False
+
+d = filter(circle_find, circles_loc)
+
+print("circles with rdious 2 having center at", [x for x in d])
